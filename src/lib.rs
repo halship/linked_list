@@ -122,25 +122,25 @@ impl<T> LinkedList<T> {
 
         while let Some(mut node) = opt_node {
             unsafe {
-            if f(&node.as_ref().elem) {
-                if let Some(mut prev_node) = node.as_mut().prev {
-                    prev_node.as_mut().next = node.as_ref().next;
-                }
-                if let Some(mut next_node) = node.as_mut().next {
-                    next_node.as_mut().prev = node.as_ref().prev;
+                if f(&node.as_ref().elem) {
+                    if let Some(mut prev_node) = node.as_mut().prev {
+                        prev_node.as_mut().next = node.as_ref().next;
+                    }
+                    if let Some(mut next_node) = node.as_mut().next {
+                        next_node.as_mut().prev = node.as_ref().prev;
+                    }
+
+                    if is_head {
+                        self.head = node.as_ref().next;
+                    }
+
+                    drop(Box::from_raw(node.as_ptr()));
+                } else {
+                    tail_node = opt_node;
+                    is_head = false;
                 }
 
-                if is_head {
-                    self.head = node.as_ref().next;
-                }
-
-                drop(Box::from_raw(node.as_ptr()));
-            } else {
-                tail_node = opt_node;
-                is_head = false;
-            }
-
-            opt_node = node.as_ref().next;
+                opt_node = node.as_ref().next;
             }
         }
 

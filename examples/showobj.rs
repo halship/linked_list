@@ -31,7 +31,7 @@ fn main() {
 
 fn test1() {
     let mut list = LinkedList::new();
-    
+
     list.push_back(Object::new(0));
     list.push_back(Object::new(1));
     list.push_back(Object::new(2));
@@ -46,7 +46,7 @@ fn test1() {
 
 fn test2() {
     let mut list = LinkedList::new();
-    
+
     list.push_back(Object::new(0));
     list.push_back(Object::new(1));
     list.push_back(Object::new(2));

@@ -117,8 +117,8 @@ impl<T> LinkedList<T> {
         F: FnMut(&T) -> bool,
     {
         let mut opt_node = self.head;
-        let mut tail_node = self.tail;
-        let mut is_head = true;
+        let mut head_node = None;
+        let mut tail_node = None;
 
         while let Some(mut node) = opt_node {
             unsafe {
@@ -130,20 +130,20 @@ impl<T> LinkedList<T> {
                         next_node.as_mut().prev = node.as_ref().prev;
                     }
 
-                    if is_head {
-                        self.head = node.as_ref().next;
-                    }
-
                     Box::from_raw(node.as_ptr());
                 } else {
+                    if let None = head_node {
+                        head_node = opt_node;
+                    }
+
                     tail_node = opt_node;
-                    is_head = false;
                 }
 
                 opt_node = node.as_ref().next;
             }
         }
 
+        self.head = head_node;
         self.tail = tail_node;
     }
 
@@ -342,6 +342,10 @@ mod tests {
         for (i, n) in list.iter().enumerate() {
             assert_eq!(correct[i], *n);
         }
+
+        list.remove_if(|_| true);
+        assert_eq!(None, list.front());
+        assert_eq!(None, list.back());
     }
 
     #[test]

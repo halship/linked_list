@@ -112,9 +112,9 @@ impl<T> LinkedList<T> {
     }
 
     /// 条件に合った要素を削除する
-    pub fn remove_if<F>(&mut self, f: F)
+    pub fn remove_if<F>(&mut self, mut f: F)
     where
-        F: Fn(&T) -> bool,
+        F: FnMut(&T) -> bool,
     {
         let mut opt_node = self.head;
         let mut tail_node = self.tail;

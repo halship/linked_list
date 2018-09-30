@@ -80,7 +80,7 @@ impl<T> LinkedList<T> {
                 }
                 self.head = head.as_ref().next;
 
-                drop(Box::from_raw(head.as_ptr()));
+                Box::from_raw(head.as_ptr());
             }
         }
     }
@@ -96,7 +96,7 @@ impl<T> LinkedList<T> {
                 }
                 self.tail = tail.as_ref().prev;
 
-                drop(Box::from_raw(tail.as_ptr()));
+                Box::from_raw(tail.as_ptr());
             }
         }
     }
@@ -134,7 +134,7 @@ impl<T> LinkedList<T> {
                         self.head = node.as_ref().next;
                     }
 
-                    drop(Box::from_raw(node.as_ptr()));
+                    Box::from_raw(node.as_ptr());
                 } else {
                     tail_node = opt_node;
                     is_head = false;
@@ -175,7 +175,7 @@ impl<T> LinkedList<T> {
         while let Some(node) = head_node {
             unsafe {
                 let next_node = node.as_ref().next;
-                drop(Box::from_raw(node.as_ptr()));
+                Box::from_raw(node.as_ptr());
                 head_node = next_node;
             }
         }
@@ -192,7 +192,7 @@ impl<T> Drop for LinkedList<T> {
         while let Some(node) = head_node {
             unsafe {
                 let next_node = node.as_ref().next;
-                drop(Box::from_raw(node.as_ptr()));
+                Box::from_raw(node.as_ptr());
                 head_node = next_node;
             }
         }

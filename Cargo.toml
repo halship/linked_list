@@ -2,6 +2,5 @@
 name = "linked_list"
 version = "0.1.0"
 authors = ["halship <gship@hotmail.co.jp>"]
-edition = "2018"
 
 [dependencies]
